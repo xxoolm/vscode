@@ -230,7 +230,7 @@ export function createApiFactoryAndRegisterActors(accessor: ServicesAccessor): I
 			},
 			logout(providerId: string, sessionId: string): Thenable<void> {
 				checkProposedApiEnabled(extension);
-				return extHostAuthentication.logout(providerId, sessionId);
+				return extHostAuthentication.removeSession(providerId, sessionId);
 			}
 		};
 
@@ -1178,7 +1178,6 @@ export function createApiFactoryAndRegisterActors(accessor: ServicesAccessor): I
 			FunctionBreakpoint: extHostTypes.FunctionBreakpoint,
 			Hover: extHostTypes.Hover,
 			IndentAction: languageConfiguration.IndentAction,
-			InlineHint: extHostTypes.InlineHint,
 			Location: extHostTypes.Location,
 			MarkdownString: extHostTypes.MarkdownString,
 			OverviewRulerLane: OverviewRulerLane,
@@ -1228,6 +1227,12 @@ export function createApiFactoryAndRegisterActors(accessor: ServicesAccessor): I
 			ViewColumn: extHostTypes.ViewColumn,
 			WorkspaceEdit: extHostTypes.WorkspaceEdit,
 			// proposed api types
+			get InlineHint() {
+				return extHostTypes.InlineHint;
+			},
+			get InlineHintKind() {
+				return extHostTypes.InlineHintKind;
+			},
 			get RemoteAuthorityResolverError() {
 				// checkProposedApiEnabled(extension);
 				return extHostTypes.RemoteAuthorityResolverError;
@@ -1248,13 +1253,9 @@ export function createApiFactoryAndRegisterActors(accessor: ServicesAccessor): I
 				// checkProposedApiEnabled(extension);
 				return extHostTypes.TimelineItem;
 			},
-			get CellKind() {
+			get NotebookCellKind() {
 				// checkProposedApiEnabled(extension);
-				return extHostTypes.CellKind;
-			},
-			get CellOutputKind() {
-				// checkProposedApiEnabled(extension);
-				return extHostTypes.CellOutputKind;
+				return extHostTypes.NotebookCellKind;
 			},
 			get NotebookCellRunState() {
 				// checkProposedApiEnabled(extension);
@@ -1291,10 +1292,6 @@ export function createApiFactoryAndRegisterActors(accessor: ServicesAccessor): I
 			get TestMessageSeverity() {
 				// checkProposedApiEnabled(extension);
 				return extHostTypes.TestMessageSeverity;
-			},
-			get TestState() {
-				// checkProposedApiEnabled(extension);
-				return extHostTypes.TestState;
 			},
 			get WorkspaceTrustState() {
 				// checkProposedApiEnabled(extension);
